@@ -1,7 +1,7 @@
 // components/HeroBanner.tsx
-import Link from "next/link";
-import Image from "next/image";
 
+import Image from "next/image";
+import Link from "next/link";
 const HeroBanner = () => {
   return (
     <section className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white overflow-hidden">
@@ -28,7 +28,15 @@ const HeroBanner = () => {
               governamentais a organizações internacionais.
             </p>
 
-
+          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <Link
+                href="#datasets"
+                className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3 rounded-lg text-lg font-semibold text-center transition duration-300 shadow-lg"
+              >
+                Explorar Dados
+              </Link>
+              
+            </div>
           </div>
 
           {/* Image */}
@@ -47,27 +55,7 @@ const HeroBanner = () => {
         </div>
       </div>
 
-      {/* Stats Bar */}
-      <div className="bg-gray-900/50 backdrop-blur-md py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {[
-              { value: "50+", label: "Fontes de Dados" },
-              { value: "24/7", label: "Atualização" },
-              { value: "100+", label: "Visualizações" },
-              { value: "10K+", label: "Consultas/Mês" },
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className="hover:scale-105 transition-transform duration-300"
-              >
-                <div className="text-3xl font-bold text-white">{stat.value}</div>
-                <div className="text-gray-300">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+     
     </section>
   );
 };

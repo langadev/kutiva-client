@@ -80,42 +80,50 @@ const DatasetList = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div id='datasets' className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center md:text-left">
         <h2 className="text-3xl font-bold text-white mb-2">Banco de Dados Disponíveis</h2>
         <p className="text-gray-300">Explore e faça download dos nossos conjuntos de dados</p>
       </div>
 
-      {/* Barra de busca e filtros */}
-      <div className="bg-gray-800 rounded-lg shadow p-4 mb-6">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="relative flex-grow">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiSearch className="text-gray-400" />
-            </div>
-            <input
-              type="text"
-              placeholder="Buscar datasets..."
-              className="pl-10 pr-4 py-2 w-full border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <FiFilter className="text-gray-400" />
-            <select
-              className="border border-gray-700 rounded-lg px-3 py-2 bg-gray-900 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              {categories.map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
-          </div>
-        </div>
+    {/* Barra de busca e filtros */}
+<div className="bg-gray-800 rounded-lg shadow p-4 mb-6">
+  <div className="flex flex-col md:flex-row gap-4">
+    {/* Campo de busca */}
+    <div className="relative flex-grow">
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <FiSearch className="text-gray-400" />
       </div>
+      <input
+        type="text"
+        placeholder="Buscar datasets..."
+        className="pl-10 pr-4 py-2 w-full border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+    </div>
+  </div>
+
+  {/* Botões de filtros */}
+  <div className="flex flex-wrap gap-2 mt-4">
+    {categories.map(category => (
+      <button
+        key={category}
+        onClick={() => setSelectedCategory(category)}
+        className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors
+          ${
+            selectedCategory === category
+              ? 'bg-indigo-600 text-white border-indigo-600'
+              : 'bg-gray-900 text-gray-300 border-gray-700 hover:bg-gray-700'
+          }
+        `}
+      >
+        {category}
+      </button>
+    ))}
+  </div>
+</div>
+
 
       {/* Lista de datasets */}
       <div className="space-y-4">

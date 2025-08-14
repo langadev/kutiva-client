@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +10,6 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Categoria", path: "/category" },
     { name: "Sobre", path: "/about" },
   ];
 
