@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiDownload, FiSearch, FiFilter, FiCalendar, FiDatabase, FiChevronDown, FiExternalLink } from 'react-icons/fi';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { FiDownload, FiSearch, FiCalendar, FiDatabase, FiChevronDown, FiExternalLink } from 'react-icons/fi';
 
 interface Dataset {
   id: string;
@@ -78,16 +78,18 @@ const DatasetList = () => {
     },
   ];
 
+
+
   const categories = ['Todos', ...new Set(datasets.map(ds => ds.category))];
-  
+
   const filteredDatasets = datasets.filter(dataset => {
-    const matchesSearch = dataset.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          dataset.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      dataset.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      dataset.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'Todos' || dataset.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredDatasets.length / itemsPerPage);
   const paginatedDatasets = filteredDatasets.slice(
     (currentPage - 1) * itemsPerPage,
@@ -96,38 +98,27 @@ const DatasetList = () => {
 
   const handleDownload = (datasetId: string) => {
     console.log(`Iniciando download do dataset ${datasetId}`);
-    // Add actual download logic here
   };
 
   const toggleExpand = (datasetId: string) => {
     setExpandedDataset(expandedDataset === datasetId ? null : datasetId);
   };
 
-  const containerVariants = {
+  // Framer Motion variants tipados
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } }
   };
 
   return (
-    <div id='datasets' className="container mx-auto px-4 py-8">
-      <motion.div 
+    <div id="datasets" className="container mx-auto px-4 py-8">
+      {/* Header */}
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -137,15 +128,14 @@ const DatasetList = () => {
         <p className="text-gray-300">Explore e faça download dos nossos conjuntos de dados</p>
       </motion.div>
 
-      {/* Search and filter bar */}
-      <motion.div 
+      {/* Search & Filters */}
+      <motion.div
         className="bg-gray-800 rounded-xl shadow-lg p-6 mb-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
         <div className="flex flex-col md:flex-row gap-4">
-          {/* Search field */}
           <div className="relative flex-grow">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <FiSearch className="text-gray-400" />
@@ -163,13 +153,7 @@ const DatasetList = () => {
           </div>
         </div>
 
-        {/* Filter chips */}
-        <motion.div 
-          className="flex flex-wrap gap-3 mt-4"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <motion.div className="flex flex-wrap gap-3 mt-4" variants={containerVariants} initial="hidden" animate="visible">
           {categories.map(category => (
             <motion.button
               key={category}
@@ -178,12 +162,10 @@ const DatasetList = () => {
                 setCurrentPage(1);
               }}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
-                ${
-                  selectedCategory === category
-                    ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }
-              `}
+                ${selectedCategory === category
+                  ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                }`}
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -195,12 +177,7 @@ const DatasetList = () => {
       </motion.div>
 
       {/* Dataset list */}
-      <motion.div 
-        className="space-y-6"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="visible">
         <AnimatePresence>
           {paginatedDatasets.length > 0 ? (
             paginatedDatasets.map(dataset => (
@@ -221,7 +198,7 @@ const DatasetList = () => {
                         </span>
                       </div>
                       <p className="text-gray-300 mb-4">{dataset.description}</p>
-                      
+
                       <div className="flex flex-wrap gap-4 text-sm text-gray-400 mb-4">
                         <div className="flex items-center gap-2">
                           <FiCalendar className="text-indigo-400" />
@@ -243,18 +220,18 @@ const DatasetList = () => {
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="flex flex-col gap-3 min-w-fit">
                       <motion.button
                         onClick={() => handleDownload(dataset.id)}
-                        className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 hover:from-indigo-700 hover:to-purple-700 text-white px-5 py-2.5 rounded-lg transition-all"
+                        className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg transition-all"
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
                       >
                         <FiDownload />
                         Baixar
                       </motion.button>
-                      
+
                       <button
                         onClick={() => toggleExpand(dataset.id)}
                         className="flex items-center justify-center gap-2 text-gray-400 hover:text-white text-sm"
@@ -298,7 +275,7 @@ const DatasetList = () => {
                               </li>
                             </ul>
                           </div>
-                          
+
                           <div>
                             <h4 className="font-medium text-gray-200 mb-2">Ações</h4>
                             <div className="flex flex-wrap gap-3">
@@ -326,7 +303,7 @@ const DatasetList = () => {
               animate={{ opacity: 1 }}
             >
               <p className="text-gray-400">Nenhum dataset encontrado com os critérios selecionados</p>
-              <button 
+              <button
                 onClick={() => {
                   setSearchTerm('');
                   setSelectedCategory('Todos');
@@ -342,36 +319,34 @@ const DatasetList = () => {
 
       {/* Pagination */}
       {filteredDatasets.length > itemsPerPage && (
-        <motion.div 
+        <motion.div
           className="mt-8 flex justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
           <nav className="inline-flex rounded-md shadow-lg overflow-hidden">
-            <button 
+            <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className="px-4 py-2 bg-gray-800 text-gray-400 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Anterior
             </button>
-            
+
             {Array.from({ length: totalPages }).map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentPage(idx + 1)}
                 className={`px-4 py-2 border-l border-r border-gray-700 ${
-                  currentPage === idx + 1 
-                    ? 'bg-indigo-600 text-white' 
-                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  currentPage === idx + 1 ? 'bg-indigo-600 text-white' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
                 }`}
               >
                 {idx + 1}
               </button>
             ))}
-            
-            <button 
+
+            <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               className="px-4 py-2 bg-gray-800 text-gray-400 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -381,6 +356,8 @@ const DatasetList = () => {
           </nav>
         </motion.div>
       )}
+
+      
     </div>
   );
 };
