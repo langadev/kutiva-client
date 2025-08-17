@@ -51,9 +51,9 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-10">
           {/* Logo */}
-                    <Link href="/" className="text-2xl font-bold text-indigo-600">
-
-            Kutiva </Link>
+                    <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+                KUTIVA
+              </span>
           {/* Links Desktop */}
           <div className="hidden md:flex items-center space-x-8">
             {renderLinks()}
