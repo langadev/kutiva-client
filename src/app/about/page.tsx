@@ -38,6 +38,27 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Contributors Section */}
+<section className="mt-16 mb-16">
+  <h2 className="text-3xl font-bold text-center mb-8">Contribuidores</h2>
+  <div className="flex flex-wrap justify-center gap-6">
+    {[
+      "Alfredo Langa",
+      "Pinto Armando Macuacua",
+      "Fernando Gomes",
+      "Simão Rafique"
+    ].map((contributor) => (
+      <div
+        key={contributor}
+        className="bg-gray-800 rounded-xl shadow-md px-6 py-4 text-white font-medium hover:bg-indigo-700 transition-colors"
+      >
+        {contributor}
+      </div>
+    ))}
+  </div>
+</section>
+
+
         {/* Project Description */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-center">Sobre o Repositório</h2>
